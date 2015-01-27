@@ -1,0 +1,9 @@
+{
+    "template_1": {
+        "template": "*",
+        "settings": {
+            "index.number_of_shards": {{TEMPLATE_DEFAULT_INDEX_NUMBER_OF_SHARDS}},
+            "index.number_of_replicas": {{TEMPLATE_DEFAULT_INDEX_NUMBER_OF_REPLICAS}}
+        }
+    }
+}

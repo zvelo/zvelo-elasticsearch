@@ -1,0 +1,26 @@
+path:
+  data: /data/data
+  logs: /data/log
+  plugins: /data/plugins
+  work: /data/work
+  conf: /elasticsearch/config
+http:
+  port: 9201
+  cors:
+    enabled: true
+    allow-origin: '*'
+cluster:
+  name: elasticsearch
+discovery:
+  zen:
+    ping:
+      multicast:
+        enabled: false
+      unicast:
+        hosts: {{DISCOVERY_ZEN_PING_UNICAST_HOSTS}}
+network:
+  publish_host: {{COREOS_PRIVATE_IPV4}}
+transport:
+  tcp:
+    port: 9301
+  publish_port: 9301

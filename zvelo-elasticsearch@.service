@@ -1,0 +1,32 @@
+[Unit]
+Description=zvelo-elasticsearch service
+After=docker.service
+
+[Service]
+User=core
+ExecStartPre=-/usr/bin/docker kill %p-%i
+ExecStartPre=-/usr/bin/docker rm %p-%i
+ExecStartPre=/usr/bin/docker pull zvelo/%p
+ExecStart=/bin/bash -c " \
+  TMPFILE_ENVETCD=$(mktemp -t service.XXXXXXXXXX); \
+  /opt/bin/envetcd \
+    --clean-env \
+    --service %p \
+    --output $TMPFILE_ENVETCD \
+    env; \
+  exec /usr/bin/docker run \
+    --rm \
+    --name %p-%i \
+    -p 9201:9201 \
+    -p 9301:9301 \
+    --env-file $TMPFILE_ENVETCD \
+    --env-file /etc/environment \
+    -e IMAGE_NAME=zvelo/%p \
+    -v /home/core/data/%p:/data \
+    zvelo/%p \
+  "
+ExecStop=/usr/bin/docker stop %p-%i
+
+[X-Fleet]
+Conflicts=%p*.service
+MachineMetadata=%p=1
