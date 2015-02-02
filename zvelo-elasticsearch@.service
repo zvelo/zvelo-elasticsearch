@@ -8,7 +8,7 @@ ExecStartPre=-/usr/bin/docker kill %p-%i
 ExecStartPre=-/usr/bin/docker rm %p-%i
 ExecStartPre=/usr/bin/docker pull zvelo/%p
 ExecStart=/bin/bash -c " \
-  ES_HEAP_SIZE=256m; \
+  ES_MEM_LIMIT=384m; \
   TMPFILE_ENVETCD=$(mktemp -t service.XXXXXXXXXX); \
   /opt/bin/envetcd \
     --clean-env \
@@ -26,7 +26,7 @@ ExecStart=/bin/bash -c " \
     --name %p-%i \
     -p 9201:9201 \
     -p 9301:9301 \
-    -m $ES_HEAP_SIZE \
+    -m $ES_MEM_LIMIT \
     --env-file $TMPFILE_ENVETCD \
     --env-file /etc/environment \
     -e IMAGE_NAME=zvelo/%p \
