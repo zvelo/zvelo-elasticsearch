@@ -37,6 +37,7 @@ ExecStart=/bin/bash -c " \
     zvelo/%p \
   "
 ExecStop=/usr/bin/docker stop %p-%i
+Restart=always
 
 [X-Fleet]
 Conflicts=%p*.service
